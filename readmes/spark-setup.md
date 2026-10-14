@@ -80,11 +80,11 @@ Now, you can open the notebook and start running the cells. *Make sure that the 
 #### Using Docker
 
 - Launch Docker Desktop
-- Download the Docker image with Spark 3.5.0 ([reference](https://hub.docker.com/r/jupyter/all-spark-notebook))
+- Download the Docker image with Spark 4.2.0 ([reference](https://hub.docker.com/r/jupyter/all-spark-notebook))
     ```bash
-    docker pull jupyter/all-spark-notebook:spark-3.5.0
+    docker pull quay.io/jupyter/all-spark-notebook
     ```
-- Open the **PowerShell** in the project main directory (lab-cse-25-26)
+- Open the **PowerShell** in the project main directory (lab-cse-26-27)
   - Launch the Docker image
     ```bash
     docker run -d `
@@ -92,14 +92,20 @@ Now, you can open the notebook and start running the cells. *Make sure that the 
       -p 4040:4040 `
       -p 18080:18080 `
       -v "${PWD}:/home/jovyan/work" `
-      jupyter/all-spark-notebook:spark-3.5.0
+      jupyter/all-spark-notebook:spark-4.2.0
     ```
 - Open Docker Desktop > Open the running container > Access the Jupyter notebook by clicking on the link that looks like
   `http://127.0.0.1:8888/lab?token=12345etc`
 
-Note: The Jupyter notebook can be accessed via IntelliJ IDEA as well, 
-but autocompletion doesn't work very well. You can also use Visual Studio Code.
+Note 1: If the webpage asks you to enter a password, you either have the wrong link or you have another Jupyter server running on the machine.
 
+Note 2: The Jupyter notebook can be accessed via Visual Studio Code as well: 
+open VS Code on the folder of the project and, as the kernel, select the running Jupyter server 
+running at `http://127.0.0.1:8888/lab?token=12345etc`. 
+Beware that paths to the datasets may need to be fixed.
+
+Note 3: The Jupyter notebook can be accessed via IntelliJ IDEA as well, 
+but autocompletion doesn't work very well. 
 
 
 ### Local History Server
