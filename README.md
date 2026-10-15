@@ -6,7 +6,7 @@ Course info: [Link](https://www.unibo.it/en/study/course-units-transferable-skil
 
 Teacher: [Enrico Gallinucci](https://www.unibo.it/sitoweb/enrico.gallinucci/en)
 
-Last update: 14/10/2026 (added 102)
+Last update: 15/10/2026 (added partial solutions to 102)
 
 ## READMEs
 
