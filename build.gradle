@@ -8,8 +8,10 @@ plugins {
     id 'maven-publish'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
 
 shadowJar { zip64 = true }
 
@@ -49,9 +51,9 @@ dependencies {
     implementation 'org.apache.commons:commons-math3:3.6.1'
 
     // Libraries for Spark
-    implementation 'org.scala-lang:scala-library:2.13.0'
-    implementation 'org.scala-lang:scala-reflect:2.13.0'
-    implementation 'org.scala-lang:scala-compiler:2.13.0'
+    implementation 'org.scala-lang:scala-library:2.13.17'
+    implementation 'org.scala-lang:scala-reflect:2.13.17'
+    implementation 'org.scala-lang:scala-compiler:2.13.17'
     implementation 'org.apache.spark:spark-core_2.13:4.2.0'
     implementation 'org.apache.spark:spark-sql_2.13:4.2.0'
     implementation 'org.apache.spark:spark-streaming_2.13:4.2.0'
@@ -64,7 +66,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
     // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
-    implementation group: 'org.apache.hadoop', name: 'hadoop-aws', version: '3.2.1'
+    implementation group: 'org.apache.hadoop', name: 'hadoop-aws', version: '3.4.0'
 }
 
 test {
@@ -74,4 +76,4 @@ test {
 }
 
 // tasks to run by executing ./gradlew
-defaultTasks 'clean', 'build', 'check', 'javadoc', 'jar'
+defaultTasks 'clean', 'build'

@@ -1,0 +1,36 @@
+# HTTP & Core Utilities
+requests==2.32.3
+tqdm==4.66.5
+pyyaml>=6.0.1
+
+# Calcolo Scientifico e Analisi Dati (compatibili Numpy 2.x)
+numpy==2.1.2
+pandas==2.2.3
+scipy==1.14.1
+scikit-learn==1.5.2
+networkx==3.3
+
+# Visualizzazione Dati
+matplotlib==3.9.2
+seaborn>=0.13.2
+pygraphviz>=1.13
+
+# Database & Connettori
+# SQLAlchemy==2.0.36
+# PyMySQL>=1.1.1
+# psycopg2-binary==2.9.10
+
+# Big Data & Hadoop Ecosystem
+pyspark==4.2.0
+findspark>=2.0.1
+hdfs>=2.7.3
+# happybase>=1.2.0
+
+# Jupyter & Notebook Tooling
+jupyterlab>=4.2.5
+notebook>=7.2.2
+ipykernel>=6.29.5
+# nbconvert>=7.16.4
+
+# Linting & Code Quality
+flake8>=7.1.1

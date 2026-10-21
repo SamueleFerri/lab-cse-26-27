@@ -1,0 +1,47 @@
+{
+    "name": "Dev",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "dev",
+    "workspaceFolder": "/workspace",
+    "forwardPorts": [8888, 22, 4040, 4041, 4042, 4043, 4044, 4045],
+    "portsAttributes": {
+        "4040-4045": { "label": "Spark application UI" }
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "files.eol": "\n",
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.insertSpaces": true,
+                "editor.tabSize": 4,
+                "editor.detectIndentation": false,
+                "editor.formatOnSave": true,
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "editor.defaultFormatter": "ms-python.black-formatter",
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter",
+                    "editor.formatOnSave": true
+                },
+                "flake8.args": [
+                    "--max-line-length=88",
+                    "--extend-ignore=E203"
+                ],
+                "workbench.iconTheme": "vscode-icons"
+            },
+            "extensions": [
+                "scalameta.metals",
+                "scala-lang.scala",
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-python.flake8",
+                "ms-toolsai.jupyter",
+                "mechatroner.rainbow-csv",
+                "janisdd.vscode-edit-csv",
+                "vscode-icons-team.vscode-icons",
+                "shardulm94.trailing-spaces",
+                "jock.SVG",
+                "tomoki1207.pdf"
+            ]
+        }
+    }
+}

@@ -1,0 +1,55 @@
+# Local Spark standalone cluster (1 master, 2 workers) plus the "dev" container VS Code attaches to.
+# Every service uses the same prebuilt image (amd64 and arm64) published on Docker Hub, so Spark,
+# Java and Python are identical on the driver (dev) and on the executors (workers).
+# The image is built from the Dockerfile and published with:
+#   docker buildx build --platform linux/amd64,linux/arm64 -t <image> --push .
+x-spark: &spark
+  image: bigunibo/spark-local-template:4.2.0
+  pull_policy: missing
+  volumes:
+    - .:/workspace
+    # Shared by driver and executors: write job outputs here, not in /tmp
+    - spark-data:/data
+    # Event logs written by the drivers and read by the history server
+    - spark-events:/tmp/spark-events
+  environment:
+    # Links shown in the web UIs point to localhost, where their ports are reachable
+    SPARK_PUBLIC_DNS: localhost
+
+services:
+  spark-master:
+    <<: *spark
+    hostname: spark-master
+    command: ["-c", "spark-class org.apache.spark.deploy.master.Master --host spark-master --port 7077 --webui-port 8080"]
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  spark-worker-1:
+    <<: *spark
+    command: ["-c", "spark-class org.apache.spark.deploy.worker.Worker --cores 2 --memory 2g --webui-port 8081 spark://spark-master:7077"]
+    ports:
+      - "127.0.0.1:8081:8081"
+    depends_on: [spark-master]
+
+  spark-worker-2:
+    <<: *spark
+    command: ["-c", "spark-class org.apache.spark.deploy.worker.Worker --cores 2 --memory 2g --webui-port 8082 spark://spark-master:7077"]
+    ports:
+      - "127.0.0.1:8082:8082"
+    depends_on: [spark-master]
+
+  spark-history:
+    <<: *spark
+    command: ["-c", "spark-class org.apache.spark.deploy.history.HistoryServer"]
+    ports:
+      - "127.0.0.1:18080:18080"
+
+  # Development container (driver side: notebooks, spark-submit)
+  dev:
+    <<: *spark
+    command: ["-c", "sleep infinity"]
+    depends_on: [spark-master, spark-worker-1, spark-worker-2, spark-history]
+
+volumes:
+  spark-data:
+  spark-events:
