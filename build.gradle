@@ -15,6 +15,14 @@ java {
 
 shadowJar { zip64 = true }
 
+// Package the AWS CLI credentials without keeping a second copy under src/main/resources.
+processResources {
+    from(providers.environmentVariable('AWS_SHARED_CREDENTIALS_FILE').orElse('aws/credentials')) {
+        into 'aws'
+        rename { 'credentials' }
+    }
+}
+
 javadoc { failOnError true }
 
 scalastyle {

@@ -4,7 +4,7 @@
 # The image is built from the Dockerfile and published with:
 #   docker buildx build --platform linux/amd64,linux/arm64 -t <image> --push .
 x-spark: &spark
-  image: bigunibo/spark-local-template:4.2.0
+  image: docker.io/bigunibo/spark-local-template:4.2.0
   pull_policy: missing
   volumes:
     - .:/workspace
