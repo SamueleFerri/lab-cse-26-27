@@ -166,10 +166,12 @@ Once created, you can reuse them as much as you want, but you cannot download th
 If you lose the file, you need to create a new key pair.
 
 Issue the following commands to:
+- Create the "keys" directory (if it doesn't exist)
 - Create a key pair (replace <your_key_pair> with a name of your choice)
 - Show the list of created keys
 
 ```bash
+mkdir aws/keys
 aws ec2 create-key-pair --key-format ppk --key-name <your_key_pair> --output text > aws/keys/<your_key_pair>.ppk
 aws ec2 describe-key-pairs
 ```
@@ -311,9 +313,21 @@ aws emr terminate-clusters --cluster-ids <cluster_id>
     ```
 - Run the jar with:
     ```bash
-    aws emr add-steps --cluster-id <your_cluster_id> --steps '[{"Args": ["spark-submit", "--deploy-mode","cluster", "--class","lab104.WordCount", "s3://<your_bucket>/BigDataLab.jar", "sharedRemote"], "Type":"CUSTOM_JAR", "ActionOnFailure":"CONTINUE", "Jar":"command-runner.jar", "Properties":"", "Name":"My Spark app"}]'
+    aws emr add-steps --cluster-id <your_cluster_id> --steps '[{"Args": ["spark-submit", "--deploy-mode","cluster", "--class","<package>.<className>", "s3://<your_bucket>/BigDataLab.jar", "sharedRemote"], "Type":"CUSTOM_JAR", "ActionOnFailure":"CONTINUE", "Jar":"command-runner.jar", "Properties":"", "Name":"My Spark app"}]'
     ```
-- Hit the Run button and wait for the application to finish (you should see "final status: SUCCEEDED" in the last Application report).
+    - If you want to request specific resources, you can add (after the `--class` option and *before* the jar) the following options (adjust the values according to your needs and the resources available in the cluster):
+        - `"--executor-memory", "4g",`
+        - `"--executor-cores", "4"`
+        - `"--num-executors", "2"`
+        - `"--driver-memory", "2g"`
+        - `"--driver-cores", "2"`
+- Wait for the application to finish (you should see "final status: SUCCEEDED" in the last Application report); check it in the UI or via this command:
+    
+    ```bash
+    aws emr describe-step --cluster-id <your_cluster_id> \
+        --step-id <your_step_id> \
+        --query 'Step.Status'
+    ```
 - Check out the results in the "output" folder in your S3 bucket (via CLI or GUI).
   - From the *Console home* of the Virtual Lab, select the S3 service, click on the bucket 
     and navigate to the output folder
@@ -332,5 +346,4 @@ aws emr terminate-clusters --cluster-ids <cluster_id>
         -log_files stdout
         ```
 - Check out the job execution plans in the History Server (via GUI). 
-  - From the *Console home* of the Virtual Lab, select the EMR service, click on the 
-    last-created cluster and click on the link to the "Spark History Server"
+  - From the *Console home* of the Virtual Lab, select the EMR service, click on the last-created cluster and click on the link to the "Spark History Server". Here, you can download the event log: you can put it in the local history server to see it locally, and it is a file that you need to deliver for the project.
