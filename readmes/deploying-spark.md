@@ -136,7 +136,7 @@ We will use the AWS CLI.
 ### AWS CLI configuration
 
 To use the AWS CLI, you need to create a profile and a key-pair (.ppk). 
-Use a Git Bash opened on the root directory of this repo for the bash commands below.
+**Use a Git Bash** opened on the root directory of this repo for the bash commands below (AWS CLI is not in the DevContainer).
 
 
 #### Profile creation and update
