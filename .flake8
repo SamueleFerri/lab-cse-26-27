@@ -1,0 +1,6 @@
+[flake8]
+# Report syntax errors and likely bugs; skip style and unused-code warnings.
+# E9: syntax/I/O errors; F62/F7/F831: invalid Python constructs.
+# F63: incorrect conditions/comparisons; F821/F822/F823: undefined names.
+# F901: raising NotImplemented instead of an exception.
+select = E9,F62,F63,F7,F821,F822,F823,F831,F901

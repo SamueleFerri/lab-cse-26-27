@@ -23,8 +23,7 @@
                     "editor.formatOnSave": true
                 },
                 "flake8.args": [
-                    "--max-line-length=88",
-                    "--extend-ignore=E203"
+                    "--config=${workspaceFolder}/.flake8"
                 ],
                 "workbench.iconTheme": "vscode-icons"
             },

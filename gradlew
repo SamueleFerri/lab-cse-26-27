@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Keep LF line endings: CRLF makes Linux read the interpreter name as "sh\r".
 
 ##############################################################################
 ##
