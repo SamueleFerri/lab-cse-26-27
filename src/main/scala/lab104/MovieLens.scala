@@ -29,7 +29,7 @@ object MovieLens {
     import sqlContext.implicits._
 
     if(args.length < 2){
-      println("The first parameter should indicate the deployment mode (\"local\" or \"remote\")")
+      println("The first parameter should indicate the deployment mode (\"local\", \"remote\", or \"sharedRemote\")")
       println("The second parameter should indicate the job: "
         + "1 for AvgRating by Movie (join-and-agg), "
         + "2 for AvgRating by Movie (agg-and-join), "
