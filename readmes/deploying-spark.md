@@ -30,17 +30,25 @@ The jobs are designed to easily switch from local to remote deployments.
 
 ### Index
 
-- [Local deployment](#local-deployment)
-  - [Requirements](#requirements)
-  - [History Server](#history-server)
-  - [Deployment](#deployment)
-- [Remote deployment](#remote-deployment)
-  - [Requirements](#requirements-1)
-  - [Accessing the Virtual Lab on AWS Academy](#accessing-the-virtual-lab-on-aws-academy)
-  - [AWS CLI configuration](#aws-cli-configuration)
-  - [Upload datasets on S3](#upload-datasets-on-s3)
-  - [Create a cluster with EMR](#create-a-cluster-with-emr)
-  - [Deployment](#deployment-1)
+- [Deploying Spark](#deploying-spark)
+    - [The jobs](#the-jobs)
+    - [Index](#index)
+  - [Local deployment](#local-deployment)
+    - [Requirements](#requirements)
+    - [History Server](#history-server)
+    - [Deployment](#deployment)
+  - [Remote deployment](#remote-deployment)
+    - [Requirements](#requirements-1)
+    - [Accessing the Virtual Lab on AWS Academy](#accessing-the-virtual-lab-on-aws-academy)
+      - [Troubleshooting (Q\&A)](#troubleshooting-qa)
+    - [AWS CLI configuration](#aws-cli-configuration)
+      - [Profile creation and update](#profile-creation-and-update)
+      - [Key-pair creation](#key-pair-creation)
+      - [Troubleshooting (Q\&A)](#troubleshooting-qa-1)
+    - [Upload datasets on S3](#upload-datasets-on-s3)
+    - [Create a log folder](#create-a-log-folder)
+    - [Create a cluster with EMR](#create-a-cluster-with-emr)
+    - [Deployment](#deployment-1)
 
 ## Local deployment
 
@@ -76,6 +84,8 @@ You should see it in the "build/libs" folder.
   - *NOTE: if the build fails, delete the folder and try again*
 - From the same terminal, run `spark-submit --class lab104.WordCount ./build/libs/BigDataLab.jar local`
 - Check out the results in the output folder and the job execution plans in the History Server.
+- `mynotes`: from terminal run `docker exec -it elated_mahavira /bin/bash` enter work folder and now run the `spark-submit`
+  on mac run `spark-class org.apache.spark.deploy.history.HistoryServer`
 
 
 ## Remote deployment
