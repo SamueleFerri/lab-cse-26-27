@@ -15,6 +15,7 @@ object MovieLens {
 
   val path_output_avgRatPerMovie = "/output/avgRatPerMovie"
   val path_output_avgRatPerGenre = "/output/avgRatPerGenre"
+  val path_output_avgRatPerTag = "/output/avgRatTag"
 
   def main(args: Array[String]): Unit = {
     // Create a SparkConf object; the configuration settings you put here will override those given in the spark-submit
@@ -124,6 +125,21 @@ object MovieLens {
         coalesce(1).
         toDF().write.format("csv").mode(SaveMode.Overwrite).
         save(Commons.getDatasetPath(writeMode,path_output_avgRatPerGenre))
+    }
+    else if (job == "6") {
+      rddRatings.
+        map(x => (x._2, x._3)).
+        join(rddTags.map(x => (x._2, x._3))).
+        map(x => (x._2._2, (x._2._1, 1))).
+        reduceByKey((a, b) => (a._1 + b._1, a._2 + b._2)).
+        map(x => (x._1, x._2._1 / x._2._2)).
+        map(x => (x._1, x._2, x._2 match {
+          case x if x >= 4 => "Positive"
+          case x if x <= 2 => "Negative"
+          case _ => "Neutral"
+          })).
+        toDF().write.format("csv").mode(SaveMode.Overwrite).
+        save(Commons.getDatasetPath(writeMode, path_output_avgRatPerTag))
     }
     else {
       println("Wrong job number")
