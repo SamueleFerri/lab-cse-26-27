@@ -237,9 +237,7 @@ Here is a list of the most common ones.
 - Copy, rename, and delete folders
   ```  bash
   aws s3 cp s3://<your_bucket_name>/datasets/ s3://<your_bucket_name>/somefoldername/
-  
   aws s3 mv s3://<your_bucket_name>/somefoldername/ s3://<your_bucket_name>/foldertodelete/
-
   aws s3 rm s3://<your_bucket_name>/foldertodelete/
   ```
 
@@ -271,7 +269,7 @@ aws s3api put-object --bucket <your_bucket_name> --key log/
 
 Amazon EMR (Elastic Map Reduce) is the service used to deploy clusters preconfigured with Hadoop-stack software (e.g., HDFS, Spark, Kafka, etc.).
 It relys on Amazon EC2 (Elastic Compute Cloud), which is the (more general) service used to request machines.
-Documentation is available [here](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/emr/index.html#cli-aws-emr). To decide which EMR versions to load, see [here](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-components.html).
+Documentation is available [here](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/emr/index.html#cli-aws-emr). To decide which EMR versions to load, see [here](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-components.html). We will use the lighter [AWS runtime for Apache Spark](https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-spark_8x.html).
 
 
 Create a cluster with the following command.
@@ -279,9 +277,7 @@ Create a cluster with the following command.
 aws emr create-cluster \
     --name "Big Data Cluster" \
     --log-uri "s3://<your_s3_log_directory>" \
-    --release-label "emr-8.1.0" \
-    --log-uri "s3://aws-logs/elasticmapreduce" \
-    --applications Name=Hadoop Name=Spark \
+    --release-label "emr-spark-8.1.0" \
     --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=m4.large InstanceGroupType=CORE,InstanceCount=2,InstanceType=m4.large \
     --service-role EMR_DefaultRole \
     --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole,KeyName=<your_key_pair_name> \
@@ -292,9 +288,9 @@ Notes:
 - This is the default configuration for laboratories, but you can change it for the project (e.g., to increase the computational power if needed)
 - See other examples [here](https://github.com/aws/aws-cli/blob/develop/awscli/examples/emr/create-cluster-examples.rst)
 - **Make sure that you replace the *log directory* and *key-pair name* in the command**
-- Note that the command returns the cluster_id (which could be needed for other commands) 
+- Note that the command returns the cluster_id (which could be needed for other commands)
 
-Show the last deployed clusters; to run jobs, you must wait for the status of the cluster 
+Show the last deployed clusters; to run jobs, you must wait for the status of the cluster
 to go from **STARTING** to **WAITING** (it takes some minutes).
 
 ```bash
@@ -323,7 +319,7 @@ aws emr terminate-clusters --cluster-ids <cluster_id>
     ```
 - Run the jar with:
     ```bash
-    aws emr add-steps --cluster-id <your_cluster_id> --steps '[{"Args": ["spark-submit", "--deploy-mode","cluster", "--class","<package>.<className>", "s3://<your_bucket>/BigDataLab.jar", "sharedRemote"], "Type":"CUSTOM_JAR", "ActionOnFailure":"CONTINUE", "Jar":"command-runner.jar", "Properties":"", "Name":"My Spark app"}]'
+    aws emr add-steps --cluster-id <your_cluster_id> --steps '[{"Args": ["spark-submit", "--deploy-mode","cluster", "--class","lab104.WordCount", "s3://<your_bucket>/BigDataLab.jar", "sharedRemote"], "Type":"CUSTOM_JAR", "ActionOnFailure":"CONTINUE", "Jar":"command-runner.jar", "Properties":"", "Name":"My Spark app"}]'
     ```
     - If you want to request specific resources, you can add (after the `--class` option and *before* the jar) the following options (adjust the values according to your needs and the resources available in the cluster):
         - `"--executor-memory", "4g",`
@@ -332,7 +328,6 @@ aws emr terminate-clusters --cluster-ids <cluster_id>
         - `"--driver-memory", "2g"`
         - `"--driver-cores", "2"`
 - Wait for the application to finish (you should see "final status: SUCCEEDED" in the last Application report); check it in the UI or via this command:
-    
     ```bash
     aws emr describe-step --cluster-id <your_cluster_id> \
         --step-id <your_step_id> \

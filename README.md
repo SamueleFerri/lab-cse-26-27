@@ -6,8 +6,6 @@ Course info: [Link](https://www.unibo.it/en/study/course-units-transferable-skil
 
 Teacher: [Enrico Gallinucci](https://www.unibo.it/sitoweb/enrico.gallinucci/en)
 
-Last update: 27/10/2026 (added solutions to 102, added 103)
-
 ## READMEs
 
 Code and instructions for every laboratory will be released progressively. With each release, a new README file will be published under the "readmes" folder.
@@ -16,3 +14,4 @@ Code and instructions for every laboratory will be released progressively. With 
 Additional readmes:
 - [Exam Project](readmes/project.md) (instructions for the project, that is mandatory for the exam)
 - [Spark Setup](readmes/spark-setup.md) (instructions to install and configure Apache Spark, and to run notebooks and jobs)
+- [Deploying Spark](readmes/deploying-spark.md) (instructions to deploy Apache Spark batch applications, both locally and remotely - including the configuration of the AWS environment)
