@@ -135,6 +135,13 @@ object Streaming {
    * @param sc
    */
   def exercise6(sc: SparkContext, host: String, port: Int): Unit = {
+    val ssc = new StreamingContext(sc, Seconds(5))
+    val lines = ssc.socketTextStream(host, port, StorageLevel.MEMORY_AND_DISK_SER).window(Seconds(60), Seconds(5))
+    val hashtags = lines.flatMap(_.split("\\|")(2).split(", ")).filter(_.nonEmpty)
+    val hashtagsCount = hashtags.map(x => (x, 1)).reduceByKey(_ + _).transform({rdd => rdd.sortBy(_._2, false)}).print()
+
+    ssc.start()
+    ssc.awaitTermination()
   }
 
   /**
