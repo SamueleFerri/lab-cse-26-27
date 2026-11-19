@@ -4,6 +4,7 @@ import org.apache.spark.sql.SparkSession
 import utils._
 import org.apache.spark.sql.SaveMode
 import org.apache.spark.{HashPartitioner, SparkConf}
+import lab104.MovieLensParser
 
 object MovieLens2 {
 
