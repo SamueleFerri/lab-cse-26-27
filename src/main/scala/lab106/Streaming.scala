@@ -88,7 +88,7 @@ object Streaming {
   /**
    * Enabling state: this allows the job to continuously update a temporary result, i.e., the state
    * NOTICE: you need to either
-   * - create a DIFFERENT directory on S3 to store the checkpoint data
+   * - create a DIFFERENT directory to store the checkpoint data
    * - empty the previous directory
    * Otherwise, the application will re-run the job already checkpointed in the directory
    * @param sc
@@ -139,7 +139,7 @@ object Streaming {
 
   /**
    * This is a stateful job to incrementally count the number of tweets by city.
-   * Remember to either create a new directory on S3 or to empty the previous one.
+   * Remember to either create a new directory or to empty the previous one.
    * @param sc
    */
   def exercise7(sc: SparkContext, host: String, port: Int, path: String): Unit = {
@@ -147,7 +147,7 @@ object Streaming {
 
   /**
    * This job extends the previous one by calculating also the average sentiment (per country instead of per city).
-   * Remember to either create a new directory on S3 or to empty the previous one.
+   * Remember to either create a new directory or to empty the previous one.
    * @param sc
    */
   def exercise8(sc: SparkContext, host: String, port: Int, path: String): Unit = {
